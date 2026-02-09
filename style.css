@@ -1,0 +1,251 @@
+:root {
+  --pri: #d8345f;
+  --sec: #e8b4bc;
+  --bg: #fef9f6;
+  --container-bg: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  cursor:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>❤️</text></svg>")
+      16 0,
+    auto;
+}
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at center, var(--bg), #f5dfe0);
+  font-family: "Outfit", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Loader */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--pri);
+  color: #fff;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  transition: opacity 0.5s;
+  font-family: "Playfair Display", serif;
+}
+
+/* Cursor */
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+}
+
+/* Image Layer */
+#img-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  perspective: 1000px;
+}
+.mem-img {
+  position: absolute;
+  width: 250px;
+  height: auto;
+  border: 6px solid #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  opacity: 0;
+}
+
+.mem-img.revealing {
+  animation: revealImage 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.mem-img.revealed {
+  opacity: 1;
+}
+
+.mem-img > img {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes revealImage {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(var(--entry-rotation, -180deg)) translateY(100px);
+    filter: blur(8px);
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.1) rotate(calc(var(--rotation) * 1.2)) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(var(--rotation)) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Beat-synchronized pulse */
+.beat-pulse {
+  animation: beatPulseAnim 0.3s ease-out;
+}
+@keyframes beatPulseAnim {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.08);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1);
+  }
+}
+
+/* Main UI */
+.container {
+  position: relative;
+  z-index: 10;
+  background: var(--container-bg);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(216, 52, 95, 0.15);
+  text-align: center;
+  border: 1px solid rgba(232, 180, 188, 0.3);
+  transition: all 0.5s;
+  max-width: 90%;
+  width: 700px;
+  min-height: 280px;
+}
+h1 {
+  color: var(--pri);
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  font-weight: 700;
+}
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 12px 35px;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+#yes-btn {
+  background: var(--pri);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(216, 52, 95, 0.3);
+}
+#yes-btn:hover {
+  transform: scale(1.1);
+  background: #b82d4f;
+}
+#no-btn {
+  background: #fff;
+  color: var(--pri);
+  border: 2px solid var(--pri);
+}
+#beat-btn {
+  background: var(--sec);
+  color: var(--pri);
+  box-shadow: 0 4px 15px rgba(232, 180, 188, 0.3);
+}
+#beat-btn:hover {
+  transform: scale(1.1);
+  background: #e09faa;
+}
+#bpm-btn {
+  background: #9b59b6;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+}
+#bpm-btn:hover {
+  transform: scale(1.1);
+  background: #8e44ad;
+}
+#record-btn {
+  background: #ff4444;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+}
+#record-btn:hover {
+  transform: scale(1.1);
+  background: #cc0000;
+}
+#log-btn {
+  background: #4a90e2;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+#log-btn:hover {
+  transform: scale(1.1);
+  background: #357abd;
+}
+
+/* Revealed Central Image */
+#central-img-container img {
+  width: 60%;
+  max-width: 300px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s forwards;
+}
+#central-img-container img.beat-pulse {
+  animation: centralBeatPulse 0.3s ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes centralBeatPulse {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(0) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Beat Visualizer */
+@keyframes beatPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
