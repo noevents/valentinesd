@@ -84,10 +84,12 @@ const init = async () => {
       bpmBeats.push(parseFloat(time.toFixed(2)));
     }
 
-    // Set which beats reveal images (spread evenly across first 20 beats)
-    const revealInterval = Math.floor(20 / IMAGES_TO_REVEAL);
-    for (let i = 0; i < IMAGES_TO_REVEAL; i++) {
-      revealBeats.push(i * revealInterval);
+    // First 3 images: interval 2, then remaining: every beat
+    for (let i = 0; i < 3; i++) {
+      revealBeats.push(i * 2);
+    }
+    for (let i = 3; i < IMAGES_TO_REVEAL; i++) {
+      revealBeats.push(4 + (i - 3) + 1);
     }
 
     // Image Preload
